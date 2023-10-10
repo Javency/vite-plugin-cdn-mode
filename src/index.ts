@@ -20,7 +20,7 @@ const CdnPlugin = (options: Options): Plugin[] => {
 		}, {})
 	}
 
-	return [
+	const plugins: Plugin[] = [
 		{
 			name: 'vite-plugin-cdn-mode',
 			config(_, { command }) {
@@ -44,6 +44,8 @@ const CdnPlugin = (options: Options): Plugin[] => {
 			},
 		},
 	]
+
+	return plugins
 }
 
 export { CdnPlugin as Plugin }
