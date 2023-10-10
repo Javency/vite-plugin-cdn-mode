@@ -1,0 +1,20 @@
+{
+  "name": "vite-plugin-cdn-mode",
+  "version": "1.0.0",
+  "description": "Vite Plugin for Inject CDN to Html",
+  "main": "/dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Javency <https://github.com/Javency>",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.8.3",
+    "rollup": "^4.0.2",
+    "rollup-plugin-external-globals": "^0.8.0"
+  },
+  "dependencies": {
+    "typescript": "^5.2.2",
+    "vite": "^4.4.11"
+  }
+}
