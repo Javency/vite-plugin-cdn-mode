@@ -11,6 +11,8 @@ $ yarn add vite-plugin-cdn-mode -D
 
 $ pnpm add vite-plugin-cdn-mode -D
 
+```
+
 ## Usage
 
 ```js
@@ -33,3 +35,4 @@ export default defineConfig({
        })
     ]
 })
+```
