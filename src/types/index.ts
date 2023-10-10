@@ -9,3 +9,7 @@ export type Module = {
     path?: string | string[]
     css?: string | string[]
 }
+
+export type ExternalMap = {
+    [key: string]: string
+}

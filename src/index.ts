@@ -1,12 +1,12 @@
 import type { UserConfig, Plugin } from 'vite'
-import type { Options, Module } from './types'
+import type { Options, Module, ExternalMap } from './types'
 import { createScriptTag, createLinkTag } from './utils'
 import externalGlobals from 'rollup-plugin-external-globals'
 
 const CdnPlugin = (options: Options): Plugin[] => {
     const { modules = [] } = options
 
-    let pkgNames, globalNames, tagsStr
+    let pkgNames: string[], globalNames: ExternalMap, tagsStr: string
 
     if (modules.length > 0) {
 		pkgNames = modules.map((m: Module) => m.name)
@@ -14,7 +14,7 @@ const CdnPlugin = (options: Options): Plugin[] => {
 			prev += ((cur?.path && createScriptTag(cur)) || '') + ((cur?.css && createLinkTag(cur)) || '')
 			return prev
 		}, '')
-		globalNames = modules.reduce((prev, cur) => {
+		globalNames = modules.reduce((prev: ExternalMap, cur) => {
 			prev[cur.name] = cur?.var || cur.name
 			return prev
 		}, {})
