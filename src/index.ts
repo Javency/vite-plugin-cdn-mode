@@ -31,7 +31,7 @@ const CdnPlugin = (options: Options): Plugin[] => {
 				}
 
 				if (command === 'build') {
-					userConfig.build!.rollupOptions = {
+					userConfig!.build!.rollupOptions = {
 						external: [...pkgNames],
 						plugins: [externalGlobals(globalNames) as Plugin],
 					}
@@ -45,5 +45,7 @@ const CdnPlugin = (options: Options): Plugin[] => {
 		},
 	]
 }
+
+export { CdnPlugin as Plugin }
 
 export default CdnPlugin
