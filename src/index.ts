@@ -3,7 +3,7 @@ import type { Options, Module, ExternalMap } from './types'
 import { createScriptTag, createLinkTag } from './utils'
 import externalGlobals from 'rollup-plugin-external-globals'
 
-const CdnPlugin = (options: Options): Plugin[] => {
+const CdnPlugin = (options: Options): Plugin => {
     const { modules = [] } = options
 
     let pkgNames: string[], globalNames: ExternalMap, tagsStr: string
@@ -20,34 +20,30 @@ const CdnPlugin = (options: Options): Plugin[] => {
 		}, {})
 	}
 
-	const plugins: Plugin[] = [
-		{
-			name: 'vite-plugin-cdn-mode',
-			config(_, { command }) {
-				const userConfig: UserConfig = {
-					build: {
-						rollupOptions: {},
-					},
-				}
+	const plugin: Plugin = {
+		name: 'vite-plugin-cdn-mode',
+		config(_, { command }) {
+			const userConfig: UserConfig = {
+				build: {
+					rollupOptions: {},
+				},
+			}
 
-				if (command === 'build') {
-					userConfig!.build!.rollupOptions = {
-						external: [...pkgNames],
-						plugins: [externalGlobals(globalNames) as Plugin],
-					}
+			if (command === 'build') {
+				userConfig!.build!.rollupOptions = {
+					external: [...pkgNames],
+					plugins: [externalGlobals(globalNames) as Plugin],
 				}
+			}
 
-				return userConfig
-			},
-			transformIndexHtml(html) {
-				return html.replace(/<\/title>/i, `</title>${tagsStr}\n`)
-			},
+			return userConfig
 		},
-	]
+		transformIndexHtml(html) {
+			return html.replace(/<\/title>/i, `</title>${tagsStr}\n`)
+		},
+	}
 
-	return plugins
+	return plugin
 }
-
-export { CdnPlugin as Plugin }
 
 export default CdnPlugin

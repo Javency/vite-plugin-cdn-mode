@@ -1,23 +1,4 @@
 import type { Module } from '../types'
-import fs from 'fs'
-import path from 'path'
-
-/**
- * get pkg dependencies version
- * @param name
- * @returns
- */
-export const getPkgDependenciesVersion = (name: string): string => {
-	const pwd = process.cwd()
-	const pkgFile = path.join(pwd, 'package.json')
-	if (fs.existsSync(pkgFile)) {
-		const pkgJson = JSON.parse(fs.readFileSync(pkgFile, 'utf8'))
-		const version = pkgJson?.dependencies?.[name] || ''
-		return version.replace(/^\D+/, '')
-	}
-
-	return ''
-}
 
 /**
  * get script tag

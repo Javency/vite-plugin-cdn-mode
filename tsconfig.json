@@ -1,15 +1,11 @@
 {
   "compilerOptions": {
-      "module": "ESNext",
-      "target": "es2017",
-      "lib": ["ESNext", "DOM"],
-      "esModuleInterop": true,
-      "strict": true,
-      "strictNullChecks": true,
-      "moduleResolution": "Node",
-      "resolveJsonModule": true,
-      "skipLibCheck": true,
-      "outDir": "dist"
-  },
-  "exclude": ["**/dist", "**/node_modules", "**/test"]
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "strict": true,
+    "resolveJsonModule": true,
+    "declaration": true,
+    "allowSyntheticDefaultImports": true
+  }
 }

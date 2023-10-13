@@ -1,8 +1,8 @@
-export type Options = {
+export interface Options{
     modules: Module[]
 }
 
-export type Module = {
+export interface Module {
     name: string
     var: string
     mode?: string
