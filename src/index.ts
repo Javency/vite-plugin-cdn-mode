@@ -4,46 +4,51 @@ import { createScriptTag, createLinkTag } from './utils'
 import externalGlobals from 'rollup-plugin-external-globals'
 
 const CdnPlugin = (options: Options): Plugin => {
-    const { modules = [] } = options
+  const { modules = [] } = options
 
-    let pkgNames: string[], globalNames: ExternalMap, tagsStr: string
+  let pkgNames: string[], globalNames: ExternalMap, tagsStr: string
 
-    if (modules.length > 0) {
-		pkgNames = modules.map((m: Module) => m.name)
-		tagsStr = modules.reduce((prev, cur) => {
-			prev += ((cur?.path && createScriptTag(cur)) || '') + ((cur?.css && createLinkTag(cur)) || '')
-			return prev
-		}, '')
-		globalNames = modules.reduce((prev: ExternalMap, cur) => {
-			prev[cur.name] = cur?.var || cur.name
-			return prev
-		}, {})
-	}
+  if (modules.length > 0) {
+    pkgNames = modules.map((m: Module) => m.name)
 
-	const plugin: Plugin = {
-		name: 'vite-plugin-cdn-mode',
-		config(_, { command }) {
-			const userConfig: UserConfig = {
-				build: {
-					rollupOptions: {},
-				},
-			}
+    tagsStr = modules.reduce((prev, cur) => {
+      prev += ((cur?.path && createScriptTag(cur)) || '') + ((cur?.css && createLinkTag(cur)) || '')
 
-			if (command === 'build') {
-				userConfig!.build!.rollupOptions = {
-					external: [...pkgNames],
-					plugins: [externalGlobals(globalNames) as Plugin],
-				}
-			}
+      return prev
+    }, '')
 
-			return userConfig
-		},
-		transformIndexHtml(html) {
-			return html.replace(/<\/title>/i, `</title>${tagsStr}\n`)
-		},
-	}
+    globalNames = modules.reduce((prev: ExternalMap, cur) => {
+      prev[cur.name] = cur?.var || cur.name
 
-	return plugin
+      return prev
+    }, {})
+  }
+
+  const plugin: Plugin = {
+    name: 'vite-plugin-cdn-mode',
+
+    config(_, { command }) {
+      const userConfig: UserConfig = {
+        build: {
+          rollupOptions: {},
+        },
+      }
+
+      if (command === 'build') {
+        userConfig!.build!.rollupOptions = {
+          external: [...pkgNames],
+
+          plugins: [externalGlobals(globalNames) as Plugin],
+        }
+      }
+      return userConfig
+    },
+    transformIndexHtml(html) {
+      return html.replace(/<\/title>/i, `</title>${tagsStr}\n`)
+    },
+  }
+
+  return plugin
 }
 
 export default CdnPlugin

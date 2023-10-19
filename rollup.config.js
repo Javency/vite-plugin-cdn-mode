@@ -6,17 +6,17 @@ export default {
   output: [
     {
       file: 'dist/index.cjs.js',
-      format: 'cjs'
+      format: 'cjs',
     },
     {
       file: 'dist/index.esm.js',
-      format: 'esm'
-    }
+      format: 'esm',
+    },
   ],
   plugins: [
     typescript({
-      tsconfig: 'tsconfig.json'
+      tsconfig: 'tsconfig.json',
     }),
-    terser()
-  ]
+    terser(),
+  ],
 }
