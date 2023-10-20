@@ -27,4 +27,5 @@ module.exports = {
     quotes: ['error', 'single'],
     semi: ['error', 'never'],
   },
+  exclude: ['dist', 'node_modules']
 }
